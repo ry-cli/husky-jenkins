@@ -4,6 +4,6 @@
 
 const isCi = process.env.CI !== undefined
 console.log('isC==', isCi)
-if (isCi) {
+if (!isCi) {
     require('husky').install()
 }
