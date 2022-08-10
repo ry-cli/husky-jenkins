@@ -1,0 +1,15 @@
+{
+  "message": "OK",
+  "data": {
+    "currentTime": 1656751242903,
+    "startLabelTime": 1656751242903,
+    "labelTime": 100,
+    "dataId": 4,
+    "isEnd": 0,
+    "labelUser": "",
+    "checkUser": "",
+    "examUser": "",
+    "rejectCount": 36
+  },
+  "status": 200
+}

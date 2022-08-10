@@ -1,0 +1,18 @@
+{
+    "code": 200,
+    "message": "SUCCESS",
+    "showMessage": "SUCCESS",
+    "data": {
+        "comments": [
+            {
+                "annotationId": 20,
+                "comment": "批注 1111111111"
+            },
+            {
+                "annotationId": 21,
+                "comment": "批注 22222222222"
+            }
+        ],
+        "remark": "备注~~~~~~~~~~"
+    }
+}

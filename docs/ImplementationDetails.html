@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ImplementationDetails</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link
+            rel="stylesheet"
+            href="file:////Users/mac/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.3/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css"
+        />
+
+        <style>
+            /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+            code[class*='language-'],
+            pre[class*='language-'] {
+                color: #333;
+                background: none;
+                font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+                text-align: left;
+                white-space: pre;
+                word-spacing: normal;
+                word-break: normal;
+                word-wrap: normal;
+                line-height: 1.4;
+
+                -moz-tab-size: 8;
+                -o-tab-size: 8;
+                tab-size: 8;
+
+                -webkit-hyphens: none;
+                -moz-hyphens: none;
+                -ms-hyphens: none;
+                hyphens: none;
+            }
+
+            /* Code blocks */
+            pre[class*='language-'] {
+                padding: 0.8em;
+                overflow: auto;
+                /* border: 1px solid #ddd; */
+                border-radius: 3px;
+                /* background: #fff; */
+                background: #f5f5f5;
+            }
+
+            /* Inline code */
+            :not(pre) > code[class*='language-'] {
+                padding: 0.1em;
+                border-radius: 0.3em;
+                white-space: normal;
+                background: #f5f5f5;
+            }
+
+            .token.comment,
+            .token.blockquote {
+                color: #969896;
+            }
+
+            .token.cdata {
+                color: #183691;
+            }
+
+            .token.doctype,
+            .token.punctuation,
+            .token.variable,
+            .token.macro.property {
+                color: #333;
+            }
+
+            .token.operator,
+            .token.important,
+            .token.keyword,
+            .token.rule,
+            .token.builtin {
+                color: #a71d5d;
+            }
+
+            .token.string,
+            .token.url,
+            .token.regex,
+            .token.attr-value {
+                color: #183691;
+            }
+
+            .token.property,
+            .token.number,
+            .token.boolean,
+            .token.entity,
+            .token.atrule,
+            .token.constant,
+            .token.symbol,
+            .token.command,
+            .token.code {
+                color: #0086b3;
+            }
+
+            .token.tag,
+            .token.selector,
+            .token.prolog {
+                color: #63a35c;
+            }
+
+            .token.function,
+            .token.namespace,
+            .token.pseudo-element,
+            .token.class,
+            .token.class-name,
+            .token.pseudo-class,
+            .token.id,
+            .token.url-reference .token.variable,
+            .token.attr-name {
+                color: #795da3;
+            }
+
+            .token.entity {
+                cursor: help;
+            }
+
+            .token.title,
+            .token.title .token.punctuation {
+                font-weight: bold;
+                color: #1d3e81;
+            }
+
+            .token.list {
+                color: #ed6a43;
+            }
+
+            .token.inserted {
+                background-color: #eaffea;
+                color: #55a532;
+            }
+
+            .token.deleted {
+                background-color: #ffecec;
+                color: #bd2c00;
+            }
+
+            .token.bold {
+                font-weight: bold;
+            }
+
+            .token.italic {
+                font-style: italic;
+            }
+
+            /* JSON */
+            .language-json .token.property {
+                color: #183691;
+            }
+
+            .language-markup .token.tag .token.punctuation {
+                color: #333;
+            }
+
+            /* CSS */
+            code.language-css,
+            .language-css .token.function {
+                color: #0086b3;
+            }
+
+            /* YAML */
+            .language-yaml .token.atrule {
+                color: #63a35c;
+            }
+
+            code.language-yaml {
+                color: #183691;
+            }
+
+            /* Ruby */
+            .language-ruby .token.function {
+                color: #333;
+            }
+
+            /* Markdown */
+            .language-markdown .token.url {
+                color: #795da3;
+            }
+
+            /* Makefile */
+            .language-makefile .token.symbol {
+                color: #795da3;
+            }
+
+            .language-makefile .token.variable {
+                color: #183691;
+            }
+
+            .language-makefile .token.builtin {
+                color: #0086b3;
+            }
+
+            /* Bash */
+            .language-bash .token.keyword {
+                color: #0086b3;
+            }
+
+            /* highlight */
+            pre[data-line] {
+                position: relative;
+                padding: 1em 0 1em 3em;
+            }
+            pre[data-line] .line-highlight-wrapper {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: transparent;
+                display: block;
+                width: 100%;
+            }
+
+            pre[data-line] .line-highlight {
+                position: absolute;
+                left: 0;
+                right: 0;
+                padding: inherit 0;
+                margin-top: 1em;
+                background: hsla(24, 20%, 50%, 0.08);
+                background: linear-gradient(to right, hsla(24, 20%, 50%, 0.1) 70%, hsla(24, 20%, 50%, 0));
+                pointer-events: none;
+                line-height: inherit;
+                white-space: pre;
+            }
+
+            pre[data-line] .line-highlight:before,
+            pre[data-line] .line-highlight[data-end]:after {
+                content: attr(data-start);
+                position: absolute;
+                top: 0.4em;
+                left: 0.6em;
+                min-width: 1em;
+                padding: 0 0.5em;
+                background-color: hsla(24, 20%, 50%, 0.4);
+                color: hsl(24, 20%, 95%);
+                font: bold 65%/1.5 sans-serif;
+                text-align: center;
+                vertical-align: 0.3em;
+                border-radius: 999px;
+                text-shadow: none;
+                box-shadow: 0 1px white;
+            }
+
+            pre[data-line] .line-highlight[data-end]:after {
+                content: attr(data-end);
+                top: auto;
+                bottom: 0.4em;
+            }
+            html body {
+                font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+                font-size: 16px;
+                line-height: 1.6;
+                color: #333;
+                background-color: #fff;
+                overflow: initial;
+                box-sizing: border-box;
+                word-wrap: break-word;
+            }
+            html body > :first-child {
+                margin-top: 0;
+            }
+            html body h1,
+            html body h2,
+            html body h3,
+            html body h4,
+            html body h5,
+            html body h6 {
+                line-height: 1.2;
+                margin-top: 1em;
+                margin-bottom: 16px;
+                color: #000;
+            }
+            html body h1 {
+                font-size: 2.25em;
+                font-weight: 300;
+                padding-bottom: 0.3em;
+            }
+            html body h2 {
+                font-size: 1.75em;
+                font-weight: 400;
+                padding-bottom: 0.3em;
+            }
+            html body h3 {
+                font-size: 1.5em;
+                font-weight: 500;
+            }
+            html body h4 {
+                font-size: 1.25em;
+                font-weight: 600;
+            }
+            html body h5 {
+                font-size: 1.1em;
+                font-weight: 600;
+            }
+            html body h6 {
+                font-size: 1em;
+                font-weight: 600;
+            }
+            html body h1,
+            html body h2,
+            html body h3,
+            html body h4,
+            html body h5 {
+                font-weight: 600;
+            }
+            html body h5 {
+                font-size: 1em;
+            }
+            html body h6 {
+                color: #5c5c5c;
+            }
+            html body strong {
+                color: #000;
+            }
+            html body del {
+                color: #5c5c5c;
+            }
+            html body a:not([href]) {
+                color: inherit;
+                text-decoration: none;
+            }
+            html body a {
+                color: #08c;
+                text-decoration: none;
+            }
+            html body a:hover {
+                color: #00a3f5;
+                text-decoration: none;
+            }
+            html body img {
+                max-width: 100%;
+            }
+            html body > p {
+                margin-top: 0;
+                margin-bottom: 16px;
+                word-wrap: break-word;
+            }
+            html body > ul,
+            html body > ol {
+                margin-bottom: 16px;
+            }
+            html body ul,
+            html body ol {
+                padding-left: 2em;
+            }
+            html body ul.no-list,
+            html body ol.no-list {
+                padding: 0;
+                list-style-type: none;
+            }
+            html body ul ul,
+            html body ul ol,
+            html body ol ol,
+            html body ol ul {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            html body li {
+                margin-bottom: 0;
+            }
+            html body li.task-list-item {
+                list-style: none;
+            }
+            html body li > p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            html body .task-list-item-checkbox {
+                margin: 0 0.2em 0.25em -1.8em;
+                vertical-align: middle;
+            }
+            html body .task-list-item-checkbox:hover {
+                cursor: pointer;
+            }
+            html body blockquote {
+                margin: 16px 0;
+                font-size: inherit;
+                padding: 0 15px;
+                color: #5c5c5c;
+                background-color: #f0f0f0;
+                border-left: 4px solid #d6d6d6;
+            }
+            html body blockquote > :first-child {
+                margin-top: 0;
+            }
+            html body blockquote > :last-child {
+                margin-bottom: 0;
+            }
+            html body hr {
+                height: 4px;
+                margin: 32px 0;
+                background-color: #d6d6d6;
+                border: 0 none;
+            }
+            html body table {
+                margin: 10px 0 15px 0;
+                border-collapse: collapse;
+                border-spacing: 0;
+                display: block;
+                width: 100%;
+                overflow: auto;
+                word-break: normal;
+                word-break: keep-all;
+            }
+            html body table th {
+                font-weight: bold;
+                color: #000;
+            }
+            html body table td,
+            html body table th {
+                border: 1px solid #d6d6d6;
+                padding: 6px 13px;
+            }
+            html body dl {
+                padding: 0;
+            }
+            html body dl dt {
+                padding: 0;
+                margin-top: 16px;
+                font-size: 1em;
+                font-style: italic;
+                font-weight: bold;
+            }
+            html body dl dd {
+                padding: 0 16px;
+                margin-bottom: 16px;
+            }
+            html body code {
+                font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+                font-size: 0.85em !important;
+                color: #000;
+                background-color: #f0f0f0;
+                border-radius: 3px;
+                padding: 0.2em 0;
+            }
+            html body code::before,
+            html body code::after {
+                letter-spacing: -0.2em;
+                content: '\00a0';
+            }
+            html body pre > code {
+                padding: 0;
+                margin: 0;
+                font-size: 0.85em !important;
+                word-break: normal;
+                white-space: pre;
+                background: transparent;
+                border: 0;
+            }
+            html body .highlight {
+                margin-bottom: 16px;
+            }
+            html body .highlight pre,
+            html body pre {
+                padding: 1em;
+                overflow: auto;
+                font-size: 0.85em !important;
+                line-height: 1.45;
+                border: #d6d6d6;
+                border-radius: 3px;
+            }
+            html body .highlight pre {
+                margin-bottom: 0;
+                word-break: normal;
+            }
+            html body pre code,
+            html body pre tt {
+                display: inline;
+                max-width: initial;
+                padding: 0;
+                margin: 0;
+                overflow: initial;
+                line-height: inherit;
+                word-wrap: normal;
+                background-color: transparent;
+                border: 0;
+            }
+            html body pre code:before,
+            html body pre tt:before,
+            html body pre code:after,
+            html body pre tt:after {
+                content: normal;
+            }
+            html body p,
+            html body blockquote,
+            html body ul,
+            html body ol,
+            html body dl,
+            html body pre {
+                margin-top: 0;
+                margin-bottom: 16px;
+            }
+            html body kbd {
+                color: #000;
+                border: 1px solid #d6d6d6;
+                border-bottom: 2px solid #c7c7c7;
+                padding: 2px 4px;
+                background-color: #f0f0f0;
+                border-radius: 3px;
+            }
+            @media print {
+                html body {
+                    background-color: #fff;
+                }
+                html body h1,
+                html body h2,
+                html body h3,
+                html body h4,
+                html body h5,
+                html body h6 {
+                    color: #000;
+                    page-break-after: avoid;
+                }
+                html body blockquote {
+                    color: #5c5c5c;
+                }
+                html body pre {
+                    page-break-inside: avoid;
+                }
+                html body table {
+                    display: table;
+                }
+                html body img {
+                    display: block;
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+                html body pre,
+                html body code {
+                    word-wrap: break-word;
+                    white-space: pre;
+                }
+            }
+            .markdown-preview {
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+            }
+            .markdown-preview .pagebreak,
+            .markdown-preview .newpage {
+                page-break-before: always;
+            }
+            .markdown-preview pre.line-numbers {
+                position: relative;
+                padding-left: 3.8em;
+                counter-reset: linenumber;
+            }
+            .markdown-preview pre.line-numbers > code {
+                position: relative;
+            }
+            .markdown-preview pre.line-numbers .line-numbers-rows {
+                position: absolute;
+                pointer-events: none;
+                top: 1em;
+                font-size: 100%;
+                left: 0;
+                width: 3em;
+                letter-spacing: -1px;
+                border-right: 1px solid #999;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            .markdown-preview pre.line-numbers .line-numbers-rows > span {
+                pointer-events: none;
+                display: block;
+                counter-increment: linenumber;
+            }
+            .markdown-preview pre.line-numbers .line-numbers-rows > span:before {
+                content: counter(linenumber);
+                color: #999;
+                display: block;
+                padding-right: 0.8em;
+                text-align: right;
+            }
+            .markdown-preview .mathjax-exps .MathJax_Display {
+                text-align: center !important;
+            }
+            .markdown-preview:not([for='preview']) .code-chunk .btn-group {
+                display: none;
+            }
+            .markdown-preview:not([for='preview']) .code-chunk .status {
+                display: none;
+            }
+            .markdown-preview:not([for='preview']) .code-chunk .output-div {
+                margin-bottom: 16px;
+            }
+            .scrollbar-style::-webkit-scrollbar {
+                width: 8px;
+            }
+            .scrollbar-style::-webkit-scrollbar-track {
+                border-radius: 10px;
+                background-color: transparent;
+            }
+            .scrollbar-style::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background-color: rgba(150, 150, 150, 0.66);
+                border: 4px solid rgba(150, 150, 150, 0.66);
+                background-clip: content-box;
+            }
+            html body[for='html-export']:not([data-presentation-mode]) {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+                overflow: auto;
+            }
+            html body[for='html-export']:not([data-presentation-mode]) .markdown-preview {
+                position: relative;
+                top: 0;
+            }
+            @media screen and (min-width: 914px) {
+                html body[for='html-export']:not([data-presentation-mode]) .markdown-preview {
+                    padding: 2em calc(50% - 457px + 2em);
+                }
+            }
+            @media screen and (max-width: 914px) {
+                html body[for='html-export']:not([data-presentation-mode]) .markdown-preview {
+                    padding: 2em;
+                }
+            }
+            @media screen and (max-width: 450px) {
+                html body[for='html-export']:not([data-presentation-mode]) .markdown-preview {
+                    font-size: 14px !important;
+                    padding: 1em;
+                }
+            }
+            @media print {
+                html body[for='html-export']:not([data-presentation-mode]) #sidebar-toc-btn {
+                    display: none;
+                }
+            }
+            html body[for='html-export']:not([data-presentation-mode]) #sidebar-toc-btn {
+                position: fixed;
+                bottom: 8px;
+                left: 8px;
+                font-size: 28px;
+                cursor: pointer;
+                color: inherit;
+                z-index: 99;
+                width: 32px;
+                text-align: center;
+                opacity: 0.4;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn {
+                opacity: 1;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 300px;
+                height: 100%;
+                padding: 32px 0 48px 0;
+                font-size: 14px;
+                box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+                box-sizing: border-box;
+                overflow: auto;
+                background-color: inherit;
+            }
+            html
+                body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc]
+                .md-sidebar-toc::-webkit-scrollbar {
+                width: 8px;
+            }
+            html
+                body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc]
+                .md-sidebar-toc::-webkit-scrollbar-track {
+                border-radius: 10px;
+                background-color: transparent;
+            }
+            html
+                body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc]
+                .md-sidebar-toc::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background-color: rgba(150, 150, 150, 0.66);
+                border: 4px solid rgba(150, 150, 150, 0.66);
+                background-clip: content-box;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a {
+                text-decoration: none;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul {
+                padding: 0 1.6em;
+                margin-top: 0.8em;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li {
+                margin-bottom: 0.8em;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul {
+                list-style-type: none;
+            }
+            html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+                left: 300px;
+                width: calc(100% - 300px);
+                padding: 2em calc(50% - 457px - 150px);
+                margin: 0;
+                box-sizing: border-box;
+            }
+            @media screen and (max-width: 1274px) {
+                html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+                    padding: 2em;
+                }
+            }
+            @media screen and (max-width: 450px) {
+                html body[for='html-export']:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview {
+                    width: 100%;
+                }
+            }
+            html body[for='html-export']:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            html body[for='html-export']:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc {
+                display: none;
+            }
+            /* Please visit the URL below for more information: */
+            /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+        </style>
+    </head>
+    <body for="html-export">
+        <div class="mume markdown-preview">
+            <h1
+                class="mume-header"
+                id="cv-lib-%E9%87%8D%E8%A6%81%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"
+            >
+                CV lib &#x91CD;&#x8981;&#x6280;&#x672F;&#x5B9E;&#x73B0;&#x7EC6;&#x8282;
+            </h1>
+
+            <h2 class="mume-header" id="%E4%B8%80-%E5%9B%BE%E5%B1%82%E4%B8%8E%E5%88%86%E7%BB%84">
+                &#x4E00; &#x56FE;&#x5C42;&#x4E0E;&#x5206;&#x7EC4;
+            </h2>
+
+            <h3 class="mume-header" id="11-%E5%88%86%E5%B1%82%E5%88%86%E7%BB%84%E6%B6%89%E5%8F%8A%E5%85%83%E7%B4%A0">
+                1.1 &#x5206;&#x5C42;&#x5206;&#x7EC4;&#x6D89;&#x53CA;&#x5143;&#x7D20;
+            </h3>
+
+            <p>
+                &#x56FE;&#x5C42;&#x4E0E;&#x5206;&#x7EC4;&#x6D89;&#x53CA;&#x5230;&#x4E86;&#x65CB;&#x8F6C;&#x3001;&#x7F29;&#x653E;&#x3001;&#x62D6;&#x62FD;&#x4E09;&#x4E2A;&#x65B9;&#x9762;&#x3002;&#x6D89;&#x53CA;&#x8FD9;&#x4E09;&#x4E2A;&#x65B9;&#x9762;&#x7684;&#x5730;&#x65B9;&#x6709;&#xFF1A;
+            </p>
+            <ul>
+                <li>
+                    <p>&#x56FE;&#x7247;&#x7EC4;&#xFF1A;&#x753B;&#x5E03;&#x663E;&#x793A;&#x56FE;&#x7247;</p>
+                </li>
+                <li>
+                    <p>
+                        &#x56FE;&#x5F62;&#x7EC4;&#xFF1A;&#x6240;&#x6709;&#x7ED8;&#x5236;&#x5728;&#x753B;&#x5E03;&#x4E2D;&#x7684;&#x7B80;&#x5355;&#x6807;&#x8BB0;&#x56FE;&#x5F62;
+                    </p>
+                    <ul>
+                        <li>
+                            &#x590D;&#x6742;&#x56FE;&#x5F62;&#x7EC4;&#xFF1A;&#x6240;&#x6709;&#x7ED8;&#x5236;&#x5728;&#x753B;&#x5E03;&#x4E2D;&#x7684;&#x590D;&#x6742;&#x6807;&#x8BB0;&#x56FE;&#x5F62;&#xFF0C;&#x6BD4;&#x5982;&#x591A;&#x8FB9;&#x5F62;&#xFF1A;&#x5176;&#x672C;&#x8D28;&#x662F;&#x591A;&#x8FB9;&#x5F62;&#x3001;&#x5706;&#x96C6;&#x5408;&#x800C;&#x6210;&#x7684;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5206;&#x7EC4;&#x3002;&#x8BE5;&#x56FE;&#x5F62;&#x672C;&#x8EAB;&#x4E5F;&#x6709;&#x7EDF;&#x4E00;&#x62D6;&#x62FD;&#x3001;&#x65CB;&#x8F6C;&#x3001;&#x653E;&#x5927;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x6545;&#x800C;&#x5728;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x5206;&#x7EC4;&#x7EC4;
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p>
+                        &#x4E0A;&#x4E0B;&#x6587;&#x4FE1;&#x606F;&#x7EC4;&#xFF1A;&#x4E0E;&#x7B80;&#x5355;&#x56FE;&#x5F62;&#x7EC4;&#x3001;&#x590D;&#x6742;&#x56FE;&#x5F62;&#x7EC4;&#x4E00;&#x81F4;&#x62D6;&#x62FD;&#xFF0C;&#x4F46;&#x4E0D;&#x53C2;&#x4E0E;&#x7F29;&#x653E;&#x3001;&#x65CB;&#x8F6C;
+                    </p>
+                </li>
+            </ul>
+            <h3 class="mume-header" id="12-%E5%88%86%E5%B1%82%E5%88%86%E7%BB%84%E7%9A%84%E5%88%92%E5%88%86">
+                1.2 &#x5206;&#x5C42;&#x5206;&#x7EC4;&#x7684;&#x5212;&#x5206;
+            </h3>
+
+            <ul>
+                <li>
+                    <p>stage&#xFF1A;&#x753B;&#x5E03;&#x6838;&#x5FC3;&#x821E;&#x53F0;</p>
+                    <ul>
+                        <li>
+                            <p>
+                                labelLayer&#xFF1A;&#x753B;&#x5E03;&#x6838;&#x5FC3;&#x7ED8;&#x5236;&#x5C42;&#xFF0C;&#x5305;&#x62EC;&#x7B80;&#x5355;&#x56FE;&#x5F62;&#x7EC4;&#x3001;&#x590D;&#x6742;&#x56FE;&#x5F62;&#x7EC4;&#x3001;&#x56FE;&#x7247;&#x7EC4;&#x3001;&#x4E0A;&#x4E0B;&#x6587;&#x4FE1;&#x606F;&#x7EC4;&#xFF0C;&#x8D1F;&#x8D23;&#x4EE5;&#x4E0B;&#x7EC4;&#x7684;<strong>&#x5168;&#x5C40;&#x62D6;&#x52A8;</strong>&#xFF0C;<strong>&#x5168;&#x5C40;&#x65CB;&#x8F6C;</strong>&#xFF0C;<strong
+                                    >&#x5168;&#x5C40;&#x7F29;&#x653E;</strong
+                                >
+                            </p>
+                            <ul>
+                                <li>
+                                    shapeGroup&#xFF1A;&#x7B80;&#x5355;&#x56FE;&#x5F62;&#x7EC4;
+                                    <ul>
+                                        <li>
+                                            &#x5404;&#x79CD;&#x81EA;&#x5B9A;&#x4E49;&#x77E9;&#x5F62;&#x3001;&#x7EBF;&#x6761;&#x7B49;
+                                        </li>
+                                        <li>
+                                            polygonGroup&#xFF1A;&#x591A;&#x8FB9;&#x5F62;&#x7EC4;&#xFF08;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x590D;&#x6742;&#x56FE;&#x5F62;&#x7EC4;&#xFF09;
+                                        </li>
+                                        <li>&#x5176;&#x4ED6;&#x590D;&#x6742;&#x56FE;&#x5F62;&#x7EC4;</li>
+                                    </ul>
+                                </li>
+                                <li>imageGroup&#xFF1A;&#x56FE;&#x7247;&#x7EC4;</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>
+                                contextLayer&#xFF1A;&#x4E0A;&#x4E0B;&#x6587;&#x7ED8;&#x5236;&#x5C42;&#xFF0C;&#x5185;&#x90E8;&#x7EC4;&#x4EF6;&#x5168;&#x90E8;&#x7EE7;&#x627F;&#x4E0E;&#x4E00;&#x4E2A;&#x77E9;&#x5F62;&#x56FE;&#x5F62;&#xFF0C;&#x5B9E;&#x73B0;&#x4E0A;&#x4E0B;&#x6587;&#x90E8;&#x5206;&#x7684;&#xFF1A;&#x662F;&#x5426;&#x53EF;&#x663E;&#x793A;&#xFF0C;&#x4F4D;&#x7F6E;&#x8FD0;&#x7B97;&#xFF0C;&#x662F;&#x5426;&#x53EF;&#x62D6;&#x62FD;&#x7B49;&#x63A5;&#x53E3;&#x89C4;&#x8303;
+                            </p>
+                            <ul>
+                                <li>
+                                    infoLabel&#xFF1A;&#x4E0A;&#x4E0B;&#x6587;&#x4FE1;&#x606F;&#x7EC4;&#xFF0C;&#x8D1F;&#x8D23;
+                                    box
+                                    &#x663E;&#x793A;&#xFF0C;&#x6BD4;&#x53EF;&#x62D6;&#x62FD;&#xFF0C;&#x4E0D;&#x53C2;&#x4E0E;&#x7F29;&#x653E;&#x3001;&#x65CB;&#x8F6C;&#x3002;&#x5728;&#x62D6;&#x62FD;
+                                    shapeGroup&#x3001;polygonGroup
+                                    &#x65F6;&#x8981;&#x5B9E;&#x73B0;&#x8BE5;&#x7EC4;&#x5BF9;&#x5E94;&#x62D6;&#x62FD;
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p>&#x5982;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+            <p>
+                <img
+                    src="data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSIxMDYxcHgiIGhlaWdodD0iNDkxcHgiIHZpZXdCb3g9Ii0wLjUgLTAuNSAxMDYxIDQ5MSIgY29udGVudD0iJmx0O214ZmlsZSBob3N0PSZxdW90O0VsZWN0cm9uJnF1b3Q7IG1vZGlmaWVkPSZxdW90OzIwMjItMDUtMjNUMDE6MzU6NTAuMTc0WiZxdW90OyBhZ2VudD0mcXVvdDtNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMF8xNl8wKSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBkcmF3LmlvLzEyLjQuMiBDaHJvbWUvNzguMC4zOTA0LjEzMCBFbGVjdHJvbi83LjEuNCBTYWZhcmkvNTM3LjM2JnF1b3Q7IGV0YWc9JnF1b3Q7UEcxQlkzcXhwdWQtNFNLc1FwUmgmcXVvdDsgdmVyc2lvbj0mcXVvdDsxMi40LjImcXVvdDsgdHlwZT0mcXVvdDtkZXZpY2UmcXVvdDsgcGFnZXM9JnF1b3Q7MSZxdW90OyZndDsmbHQ7ZGlhZ3JhbSBpZD0mcXVvdDtNQVhxU1ZjTnlRdERuTGJSTnZRQSZxdW90OyBuYW1lPSZxdW90O1BhZ2UtMSZxdW90OyZndDs3VmxkYjVzd0ZQMDFmdXlFYlQ3TUk2U2tVN1ZwbWpKdGp4TUJKMEVqT0NOMFNmZnJkdzBtQ2RocnV5bU8ybTU1aVgzOWdUbm5IdDlyak9oa3ZiK3AwODNxdmNoNWlZaVQ3eEc5Um9UZ0lLRHdKeTMzbmNVTDNjNndySXRjZFRvYVpzVlByb3lPc3Q0Vk9kOE9PalpDbEUyeEdSb3pVVlU4YXdhMnRLN0ZidGh0SWNyaFV6ZnBrbXVHV1phV3V2VkxrVGVyenNwSWNMUy81Y1Z5MVQ4WisySFhzazc3enVwTnRxczBGN3NURTAwUW5kUkNORjFwdlovd1VvTFg0OUtObS82bTliQ3dtbGZOVXdiY2ZwaCsvVFJibHgrbTVQUHR1K2pyeC9qSDdaV2E1VWRhM3FrWFZvdHQ3bnNFYW5GWDVWeE80aUFhNzFaRncyZWJOSk90TytBY2JLdG1YVUlOUTNGUmxPVkVsS0p1eDlJNXp2T0ZITFp0YXZHTm43UmdKNkFoekJIcnI5R3ZpZGNOMzUrWTFHdmRjTEhtVFgwUFhWVHJWYWdnVmo2R3FhcnZqb3hoeDFmRzFRbGRsQ2xqcXR4a2VaajhpQ1FVRkpoL0FDeXhES3pES2ZkTndEcWNPWXlkQ2RoZ0NPeEJsU2ZBdWlaY1NXQUxWL29hY0hYWkNGZkgwM0VOVExoYTgxZHNHZGpjNHl4M1RjQXlNcWUrZnlhSGRVZkFNc05Pd0F6QVltc09pejBkMk1SRGJJcWlDQ1UrQ2llSWhTaHhVY3dRckt3clFCUHhTMWhiUEsraHRKUWxsRUNIb0IzbG9TaEJZZFIyRHR2aEhncGpGQ2NvQ1dTVkJXZmxic0V5bm1VbTd1Yk1jejNuVE56aElYZlUxN2t6YWNLM3hweXZNVmVzSWQ3ZkFKWWJEV0I0eTJhSTRoQ3RTbFI4QksweXBXV3hyS0NhQVhZYzdMSEVySUFVSkZJTjZ5TFA1V09NdEEySlhZaXFtYWxGR1RLRVB5YWw5OTZlRStkcG5CQnJuQVN2WVp2QzQvMy9HV3hUb1FZc0pLeWJmOHJaQ1gxbTN0NVBQSWdkRDBTQkFJVVFWdHB3RUYrajZMelN1RXdVd0tOY25ybzZCeVpsV0lzQ3hIQkVlcGlET0VMeHRBM3R3QUYrZ1J5UTRIRU9URm0vUFE0TXA2bUhzNkhJYlMxTTVrVHhpU0FrUFRGaTdndGtaYXdNMTdBN2hRWldYR3VzNkVlR04vTDNBckVsN0hGc1RUdS9QV3pkMTVEbmVHU2M1K2puM0F2bk9lUWl4N0ZYRUlnOWIzd2MwN203NkhHTUdJNWoxVUw4U3dtcUY0d1QxS2R4WWk5QlpVWTFxVzhSaDZEYjZpdW1LQWxSNkVxeFNLRlJ4SzVieVZ4TDBZR0ZkZEtEUGtUMk1TZ09Kb0UrckEvd3Z1ek1LSXFZTEVDcUZYZlNpOXRIZEtyc1BvbEFFdUQwdzhNWEtNWmc5RzJFNk9FSmU1Y1VJOVd6NG0wanIxSWVGNkk5Z2FsNmQ0ZEV6Z1Q5SVJYb0x4ZWVtQXhiU3cyb0tUWG90TExkcE5VQWZ2LzduYnhlYW5HNTJyYkFRQ2h6c0wvWnQrajA3YjNFeW5UT3kzZnBQYS83S1dHSjNheEtnODk0bysxNHg3NkZqVmY3cm15NFlUTGwzdFkyWG1wSVkvN0dDVFFQeUtBVFVQcmZCeDVQWnUzNUFGU1A5OEp0MjhudE9rMStBUT09Jmx0Oy9kaWFncmFtJmd0OyZsdDsvbXhmaWxlJmd0OyIgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsiPjxkZWZzLz48Zz48cmVjdCB4PSIwIiB5PSIxMTAiIHdpZHRoPSIxMDYwIiBoZWlnaHQ9IjM4MCIgZmlsbD0iI2IxZGRmMCIgc3Ryb2tlPSIjMTA3MzllIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PHJlY3QgeD0iMjAiIHk9IjE5MCIgd2lkdGg9IjQ2MCIgaGVpZ2h0PSIyNzAiIGZpbGw9IiNiMGUzZTYiIHN0cm9rZT0iIzBlODA4OCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxyZWN0IHg9IjU3MCIgeT0iMTg1IiB3aWR0aD0iNDcwIiBoZWlnaHQ9IjI4MCIgZmlsbD0iI2IwZTNlNiIgc3Ryb2tlPSIjMGU4MDg4IiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PHJlY3QgeD0iNTAiIHk9IjI2MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxNzAiIGZpbGw9IiNkNWU4ZDQiIHN0cm9rZT0iIzgyYjM2NiIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxyZWN0IHg9IjgwIiB5PSIzNDAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI2MCIgZmlsbD0iI2Y4Y2VjYyIgc3Ryb2tlPSIjYjg1NDUwIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODQuNSwzNTYuNSkiPjxzd2l0Y2g+PGZvcmVpZ25PYmplY3Qgc3R5bGU9Im92ZXJmbG93OnZpc2libGU7IiBwb2ludGVyLWV2ZW50cz0iYWxsIiB3aWR0aD0iNjAiIGhlaWdodD0iMjYiIHJlcXVpcmVkRmVhdHVyZXM9Imh0dHA6Ly93d3cudzMub3JnL1RSL1NWRzExL2ZlYXR1cmUjRXh0ZW5zaWJpbGl0eSI+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCIgc3R5bGU9ImRpc3BsYXk6IGlubGluZS1ibG9jazsgZm9udC1zaXplOiAxMnB4OyBmb250LWZhbWlseTogSGVsdmV0aWNhOyBjb2xvcjogcmdiKDAsIDAsIDApOyBsaW5lLWhlaWdodDogMS4yOyB2ZXJ0aWNhbC1hbGlnbjogdG9wOyB3aWR0aDogNjFweDsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyB0ZXh0LWFsaWduOiBjZW50ZXI7Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTppbmxpbmUtYmxvY2s7dGV4dC1hbGlnbjppbmhlcml0O3RleHQtZGVjb3JhdGlvbjppbmhlcml0O3doaXRlLXNwYWNlOm5vcm1hbDsiPuWPquacieS4gOS4qjxiciAvPuiHquWumuS5ieWbvueJhzwvZGl2PjwvZGl2PjwvZm9yZWlnbk9iamVjdD48dGV4dCB4PSIzMCIgeT0iMTkiIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSI+5Y+q5pyJ5LiA5LiqJmx0O2JyJmd0O+iHquWumuS5ieWbvueJhzwvdGV4dD48L3N3aXRjaD48L2c+PHJlY3QgeD0iMTA1IiB5PSIyODAiIHdpZHRoPSI3MCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTA0LjUsMjgzLjUpIj48c3dpdGNoPjxmb3JlaWduT2JqZWN0IHN0eWxlPSJvdmVyZmxvdzp2aXNpYmxlOyIgcG9pbnRlci1ldmVudHM9ImFsbCIgd2lkdGg9IjcwIiBoZWlnaHQ9IjEyIiByZXF1aXJlZEZlYXR1cmVzPSJodHRwOi8vd3d3LnczLm9yZy9UUi9TVkcxMS9mZWF0dXJlI0V4dGVuc2liaWxpdHkiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IGZvbnQtc2l6ZTogMTJweDsgZm9udC1mYW1pbHk6IEhlbHZldGljYTsgY29sb3I6IHJnYigwLCAwLCAwKTsgbGluZS1oZWlnaHQ6IDEuMjsgdmVydGljYWwtYWxpZ246IHRvcDsgd2lkdGg6IDcycHg7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgZm9udC13ZWlnaHQ6IGJvbGQ7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+aW1hZ2VHcm91cDwvZGl2PjwvZGl2PjwvZm9yZWlnbk9iamVjdD48dGV4dCB4PSIzNSIgeT0iMTIiIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSIgZm9udC13ZWlnaHQ9ImJvbGQiPmltYWdlR3JvdXA8L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjI3MCIgeT0iMjYwIiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgZmlsbD0iI2Q1ZThkNCIgc3Ryb2tlPSIjODJiMzY2IiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PHJlY3QgeD0iMzI1IiB5PSIyODAiIHdpZHRoPSI3MCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJub25lIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzI0LjUsMjgzLjUpIj48c3dpdGNoPjxmb3JlaWduT2JqZWN0IHN0eWxlPSJvdmVyZmxvdzp2aXNpYmxlOyIgcG9pbnRlci1ldmVudHM9ImFsbCIgd2lkdGg9IjcwIiBoZWlnaHQ9IjEyIiByZXF1aXJlZEZlYXR1cmVzPSJodHRwOi8vd3d3LnczLm9yZy9UUi9TVkcxMS9mZWF0dXJlI0V4dGVuc2liaWxpdHkiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IGZvbnQtc2l6ZTogMTJweDsgZm9udC1mYW1pbHk6IEhlbHZldGljYTsgY29sb3I6IHJnYigwLCAwLCAwKTsgbGluZS1oZWlnaHQ6IDEuMjsgdmVydGljYWwtYWxpZ246IHRvcDsgd2lkdGg6IDcycHg7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgZm9udC13ZWlnaHQ6IGJvbGQ7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+c2hhcGVHcm91cDwvZGl2PjwvZGl2PjwvZm9yZWlnbk9iamVjdD48dGV4dCB4PSIzNSIgeT0iMTIiIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSIgZm9udC13ZWlnaHQ9ImJvbGQiPnNoYXBlR3JvdXA8L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjI4MCIgeT0iMzIwIiB3aWR0aD0iODAiIGhlaWdodD0iNjAiIGZpbGw9IiNmOGNlY2MiIHN0cm9rZT0iI2I4NTQ1MCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4OS41LDM0My41KSI+PHN3aXRjaD48Zm9yZWlnbk9iamVjdCBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHdpZHRoPSI2MCIgaGVpZ2h0PSIxMiIgcmVxdWlyZWRGZWF0dXJlcz0iaHR0cDovL3d3dy53My5vcmcvVFIvU1ZHMTEvZmVhdHVyZSNFeHRlbnNpYmlsaXR5Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTogaW5saW5lLWJsb2NrOyBmb250LXNpemU6IDEycHg7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUtaGVpZ2h0OiAxLjI7IHZlcnRpY2FsLWFsaWduOiB0b3A7IHdpZHRoOiA2MXB4OyB3aGl0ZS1zcGFjZTogbm93cmFwOyBvdmVyZmxvdy13cmFwOiBub3JtYWw7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+6Ieq5a6a5LmJ55+p5b2iPC9kaXY+PC9kaXY+PC9mb3JlaWduT2JqZWN0Pjx0ZXh0IHg9IjMwIiB5PSIxMiIgZmlsbD0iIzAwMDAwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMnB4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhIj7oh6rlrprkuYnnn6nlvaI8L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjM2MCIgeT0iMzIwIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIGZpbGw9IiNmOGNlY2MiIHN0cm9rZT0iI2I4NTQ1MCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2MS41LDMzNi41KSI+PHN3aXRjaD48Zm9yZWlnbk9iamVjdCBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHdpZHRoPSI1NiIgaGVpZ2h0PSIyNiIgcmVxdWlyZWRGZWF0dXJlcz0iaHR0cDovL3d3dy53My5vcmcvVFIvU1ZHMTEvZmVhdHVyZSNFeHRlbnNpYmlsaXR5Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTogaW5saW5lLWJsb2NrOyBmb250LXNpemU6IDEycHg7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUtaGVpZ2h0OiAxLjI7IHZlcnRpY2FsLWFsaWduOiB0b3A7IHdpZHRoOiA1NnB4OyB3aGl0ZS1zcGFjZTogbm93cmFwOyBvdmVyZmxvdy13cmFwOiBub3JtYWw7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+6Ieq5a6a5LmJ57q/5p2hPC9kaXY+PC9kaXY+PC9mb3JlaWduT2JqZWN0Pjx0ZXh0IHg9IjI4IiB5PSIxOSIgZmlsbD0iIzAwMDAwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMnB4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhIj7oh6rlrprkuYnnur/mnaE8L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjI4MCIgeT0iMzgwIiB3aWR0aD0iOTAiIGhlaWdodD0iNDAiIGZpbGw9IiNmOGNlY2MiIHN0cm9rZT0iI2I4NTQ1MCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4Mi41LDM5My41KSI+PHN3aXRjaD48Zm9yZWlnbk9iamVjdCBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHdpZHRoPSI4NCIgaGVpZ2h0PSIxMiIgcmVxdWlyZWRGZWF0dXJlcz0iaHR0cDovL3d3dy53My5vcmcvVFIvU1ZHMTEvZmVhdHVyZSNFeHRlbnNpYmlsaXR5Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTogaW5saW5lLWJsb2NrOyBmb250LXNpemU6IDEycHg7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUtaGVpZ2h0OiAxLjI7IHZlcnRpY2FsLWFsaWduOiB0b3A7IHdpZHRoOiA4NXB4OyB3aGl0ZS1zcGFjZTogbm93cmFwOyBvdmVyZmxvdy13cmFwOiBub3JtYWw7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+6Ieq5a6a5LmJ5aSa6L655b2i57uEPC9kaXY+PC9kaXY+PC9mb3JlaWduT2JqZWN0Pjx0ZXh0IHg9IjQyIiB5PSIxMiIgZmlsbD0iIzAwMDAwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMnB4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhIj7oh6rlrprkuYnlpJrovrnlvaLnu4Q8L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjM3MCIgeT0iMzgwIiB3aWR0aD0iNzAiIGhlaWdodD0iNDAiIGZpbGw9IiNmOGNlY2MiIHN0cm9rZT0iI2I4NTQ1MCIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5Ni41LDM5My41KSI+PHN3aXRjaD48Zm9yZWlnbk9iamVjdCBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMiIgcmVxdWlyZWRGZWF0dXJlcz0iaHR0cDovL3d3dy53My5vcmcvVFIvU1ZHMTEvZmVhdHVyZSNFeHRlbnNpYmlsaXR5Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTogaW5saW5lLWJsb2NrOyBmb250LXNpemU6IDEycHg7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUtaGVpZ2h0OiAxLjI7IHZlcnRpY2FsLWFsaWduOiB0b3A7IHdpZHRoOiAxOHB4OyB3aGl0ZS1zcGFjZTogbm93cmFwOyBvdmVyZmxvdy13cmFwOiBub3JtYWw7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+Li4uLi48L2Rpdj48L2Rpdj48L2ZvcmVpZ25PYmplY3Q+PHRleHQgeD0iOCIgeT0iMTIiIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSI+Li4uLi48L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjYxMCIgeT0iMjY1IiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE3MCIgZmlsbD0iI2Q1ZThkNCIgc3Ryb2tlPSIjODJiMzY2IiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PHJlY3QgeD0iNjQwIiB5PSIzNDUiIHdpZHRoPSI3MCIgaGVpZ2h0PSI2MCIgZmlsbD0iI2Y4Y2VjYyIgc3Ryb2tlPSIjYjg1NDUwIiBwb2ludGVyLWV2ZW50cz0iYWxsIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjQ0LjUsMzYxLjUpIj48c3dpdGNoPjxmb3JlaWduT2JqZWN0IHN0eWxlPSJvdmVyZmxvdzp2aXNpYmxlOyIgcG9pbnRlci1ldmVudHM9ImFsbCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjI2IiByZXF1aXJlZEZlYXR1cmVzPSJodHRwOi8vd3d3LnczLm9yZy9UUi9TVkcxMS9mZWF0dXJlI0V4dGVuc2liaWxpdHkiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IGZvbnQtc2l6ZTogMTJweDsgZm9udC1mYW1pbHk6IEhlbHZldGljYTsgY29sb3I6IHJnYigwLCAwLCAwKTsgbGluZS1oZWlnaHQ6IDEuMjsgdmVydGljYWwtYWxpZ246IHRvcDsgd2lkdGg6IDYxcHg7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgdGV4dC1hbGlnbjogY2VudGVyOyI+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCIgc3R5bGU9ImRpc3BsYXk6aW5saW5lLWJsb2NrO3RleHQtYWxpZ246aW5oZXJpdDt0ZXh0LWRlY29yYXRpb246aW5oZXJpdDt3aGl0ZS1zcGFjZTpub3JtYWw7Ij7lj6rmnInkuIDkuKo8YnIgLz7oh6rlrprkuYnnn6nlvaI8L2Rpdj48L2Rpdj48L2ZvcmVpZ25PYmplY3Q+PHRleHQgeD0iMzAiIHk9IjE5IiBmaWxsPSIjMDAwMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjEycHgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EiPuWPquacieS4gOS4qiZsdDticiZndDvoh6rlrprkuYnnn6nlvaI8L3RleHQ+PC9zd2l0Y2g+PC9nPjxyZWN0IHg9IjY2NSIgeT0iMjg1IiB3aWR0aD0iNzAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0ibm9uZSIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY3MC41LDI4OC41KSI+PHN3aXRjaD48Zm9yZWlnbk9iamVjdCBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHdpZHRoPSI1OCIgaGVpZ2h0PSIxMiIgcmVxdWlyZWRGZWF0dXJlcz0iaHR0cDovL3d3dy53My5vcmcvVFIvU1ZHMTEvZmVhdHVyZSNFeHRlbnNpYmlsaXR5Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTogaW5saW5lLWJsb2NrOyBmb250LXNpemU6IDEycHg7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUtaGVpZ2h0OiAxLjI7IHZlcnRpY2FsLWFsaWduOiB0b3A7IHdpZHRoOiA1OHB4OyB3aGl0ZS1zcGFjZTogbm93cmFwOyBvdmVyZmxvdy13cmFwOiBub3JtYWw7IGZvbnQtd2VpZ2h0OiBib2xkOyB0ZXh0LWFsaWduOiBjZW50ZXI7Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTppbmxpbmUtYmxvY2s7dGV4dC1hbGlnbjppbmhlcml0O3RleHQtZGVjb3JhdGlvbjppbmhlcml0O3doaXRlLXNwYWNlOm5vcm1hbDsiPmluZm9Hcm91cDwvZGl2PjwvZGl2PjwvZm9yZWlnbk9iamVjdD48dGV4dCB4PSIyOSIgeT0iMTIiIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTJweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSIgZm9udC13ZWlnaHQ9ImJvbGQiPmluZm9Hcm91cDwvdGV4dD48L3N3aXRjaD48L2c+PHJlY3QgeD0iODAwIiB5PSIwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZjhjZWNjIiBzdHJva2U9IiNiODU0NTAiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4MjYuNSwxNi41KSI+PHN3aXRjaD48Zm9yZWlnbk9iamVjdCBzdHlsZT0ib3ZlcmZsb3c6dmlzaWJsZTsiIHBvaW50ZXItZXZlbnRzPSJhbGwiIHdpZHRoPSI5NiIgaGVpZ2h0PSIyNiIgcmVxdWlyZWRGZWF0dXJlcz0iaHR0cDovL3d3dy53My5vcmcvVFIvU1ZHMTEvZmVhdHVyZSNFeHRlbnNpYmlsaXR5Ij48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiBzdHlsZT0iZGlzcGxheTogaW5saW5lLWJsb2NrOyBmb250LXNpemU6IDEycHg7IGZvbnQtZmFtaWx5OiBIZWx2ZXRpY2E7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUtaGVpZ2h0OiAxLjI7IHZlcnRpY2FsLWFsaWduOiB0b3A7IHdpZHRoOiA5N3B4OyB3aGl0ZS1zcGFjZTogbm93cmFwOyBvdmVyZmxvdy13cmFwOiBub3JtYWw7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+5Zu+5b2i5Y+z6ZSu5pON5L2c5oyJ6ZKuPGJyIC8+77yI5aSW6YOo6aG555uu5a6e546w77yJPC9kaXY+PC9kaXY+PC9mb3JlaWduT2JqZWN0Pjx0ZXh0IHg9IjQ4IiB5PSIxOSIgZmlsbD0iIzAwMDAwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMnB4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhIj7lm77lvaLlj7PplK7mk43kvZzmjInpkq4mbHQ7YnImZ3Q777yI5aSW6YOo6aG555uu5a6e546w77yJPC90ZXh0Pjwvc3dpdGNoPjwvZz48cmVjdCB4PSI0OTAiIHk9IjEyMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjQwIiBmaWxsPSJub25lIiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OTMuNSwxMjguNSkiPjxzd2l0Y2g+PGZvcmVpZ25PYmplY3Qgc3R5bGU9Im92ZXJmbG93OnZpc2libGU7IiBwb2ludGVyLWV2ZW50cz0iYWxsIiB3aWR0aD0iNTIiIGhlaWdodD0iMjIiIHJlcXVpcmVkRmVhdHVyZXM9Imh0dHA6Ly93d3cudzMub3JnL1RSL1NWRzExL2ZlYXR1cmUjRXh0ZW5zaWJpbGl0eSI+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCIgc3R5bGU9ImRpc3BsYXk6IGlubGluZS1ibG9jazsgZm9udC1zaXplOiAyMHB4OyBmb250LWZhbWlseTogSGVsdmV0aWNhOyBjb2xvcjogcmdiKDAsIDAsIDApOyBsaW5lLWhlaWdodDogMS4yOyB2ZXJ0aWNhbC1hbGlnbjogdG9wOyB3aWR0aDogNTRweDsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyBmb250LXdlaWdodDogYm9sZDsgdGV4dC1hbGlnbjogY2VudGVyOyI+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCIgc3R5bGU9ImRpc3BsYXk6aW5saW5lLWJsb2NrO3RleHQtYWxpZ246aW5oZXJpdDt0ZXh0LWRlY29yYXRpb246aW5oZXJpdDt3aGl0ZS1zcGFjZTpub3JtYWw7Ij5zdGFnZTwvZGl2PjwvZGl2PjwvZm9yZWlnbk9iamVjdD48dGV4dCB4PSIyNiIgeT0iMjEiIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMjBweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSIgZm9udC13ZWlnaHQ9ImJvbGQiPnN0YWdlPC90ZXh0Pjwvc3dpdGNoPjwvZz48cmVjdCB4PSI1MCIgeT0iMjEwIiB3aWR0aD0iOTAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0ibm9uZSIgcG9pbnRlci1ldmVudHM9ImFsbCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU0LjUsMjExLjUpIj48c3dpdGNoPjxmb3JlaWduT2JqZWN0IHN0eWxlPSJvdmVyZmxvdzp2aXNpYmxlOyIgcG9pbnRlci1ldmVudHM9ImFsbCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjE3IiByZXF1aXJlZEZlYXR1cmVzPSJodHRwOi8vd3d3LnczLm9yZy9UUi9TVkcxMS9mZWF0dXJlI0V4dGVuc2liaWxpdHkiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IGZvbnQtc2l6ZTogMTZweDsgZm9udC1mYW1pbHk6IEhlbHZldGljYTsgY29sb3I6IHJnYigwLCAwLCAwKTsgbGluZS1oZWlnaHQ6IDEuMjsgdmVydGljYWwtYWxpZ246IHRvcDsgd2lkdGg6IDgwcHg7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgZm9udC13ZWlnaHQ6IGJvbGQ7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTZweCI+bGFiZWxMYXllcjwvc3Bhbj48L2Rpdj48L2Rpdj48L2ZvcmVpZ25PYmplY3Q+PHRleHQgeD0iNDAiIHk9IjE3IiBmaWxsPSIjMDAwMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2cHgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EiIGZvbnQtd2VpZ2h0PSJib2xkIj5bTm90IHN1cHBvcnRlZCBieSB2aWV3ZXJdPC90ZXh0Pjwvc3dpdGNoPjwvZz48cmVjdCB4PSI2MTAiIHk9IjIxMCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjIwIiBmaWxsPSJub25lIiBzdHJva2U9Im5vbmUiIHBvaW50ZXItZXZlbnRzPSJhbGwiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MDUuNSwyMTEuNSkiPjxzd2l0Y2g+PGZvcmVpZ25PYmplY3Qgc3R5bGU9Im92ZXJmbG93OnZpc2libGU7IiBwb2ludGVyLWV2ZW50cz0iYWxsIiB3aWR0aD0iOTkiIGhlaWdodD0iMTciIHJlcXVpcmVkRmVhdHVyZXM9Imh0dHA6Ly93d3cudzMub3JnL1RSL1NWRzExL2ZlYXR1cmUjRXh0ZW5zaWJpbGl0eSI+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCIgc3R5bGU9ImRpc3BsYXk6IGlubGluZS1ibG9jazsgZm9udC1zaXplOiAxNnB4OyBmb250LWZhbWlseTogSGVsdmV0aWNhOyBjb2xvcjogcmdiKDAsIDAsIDApOyBsaW5lLWhlaWdodDogMS4yOyB2ZXJ0aWNhbC1hbGlnbjogdG9wOyB3aWR0aDogMTAxcHg7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgZm9udC13ZWlnaHQ6IGJvbGQ7IHRleHQtYWxpZ246IGNlbnRlcjsiPjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt0ZXh0LWFsaWduOmluaGVyaXQ7dGV4dC1kZWNvcmF0aW9uOmluaGVyaXQ7d2hpdGUtc3BhY2U6bm9ybWFsOyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTZweCI+Y29udGV4dExheWVyPC9zcGFuPjwvZGl2PjwvZGl2PjwvZm9yZWlnbk9iamVjdD48dGV4dCB4PSI1MCIgeT0iMTciIGZpbGw9IiMwMDAwMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTZweCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSIgZm9udC13ZWlnaHQ9ImJvbGQiPltOb3Qgc3VwcG9ydGVkIGJ5IHZpZXdlcl08L3RleHQ+PC9zd2l0Y2g+PC9nPjwvZz48L3N2Zz4="
+                    alt="&#x5206;&#x5C42;&#x67B6;&#x6784;&#x56FE;"
+                />
+            </p>
+            <h3 class="mume-header" id="13-%E5%9B%BE%E5%BD%A2%E6%93%8D%E4%BD%9C%E6%8C%89%E9%92%AE">
+                1.3 &#x56FE;&#x5F62;&#x64CD;&#x4F5C;&#x6309;&#x94AE;
+            </h3>
+
+            <p>
+                &#x56FE;&#x5F62;&#x53F3;&#x952E;&#x64CD;&#x4F5C;&#xFF08;&#x663E;&#x793A;&#x64CD;&#x4F5C;&#x6309;&#x94AE;/&#x663E;&#x793A;&#x6279;&#x6CE8;&#x8F93;&#x5165;&#x6846;&#xFF09;&#x4E0D;&#x6D89;&#x53CA;&#x65CB;&#x8F6C;&#x3001;&#x7F29;&#x653E;&#x3001;&#x62D6;&#x62FD;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x5176;&#x5B8C;&#x5168;&#x4E0D;&#x4F9D;&#x8D56;&#x4E8E;
+                CV&#xFF0C;&#x4E14;&#x8BE5;&#x90E8;&#x5206;&#x7531; canvas
+                &#x5185;&#x90E8;&#x7ED8;&#x5236;&#x56F0;&#x96BE;&#xFF0C;&#x6545;&#x800C;&#x4EA4;&#x7531;&#x5916;&#x90E8;&#x9879;&#x76EE;&#x7ED8;&#x5236;&#xFF08;&#x539F;&#x7248;
+                CVAT &#x4E5F;&#x662F;&#x8FD9;&#x6837;&#x6D89;&#x53CA;&#xFF09;&#x3002;
+            </p>
+            <h2 class="mume-header" id="%E4%BA%8C-cv-%E5%BA%93%E6%A0%B8%E5%BF%83%E6%89%A9%E5%B1%95%E5%8A%9F%E8%83%BD">
+                &#x4E8C; CV &#x5E93;&#x6838;&#x5FC3;&#x6269;&#x5C55;&#x529F;&#x80FD;
+            </h2>
+
+            <h3 class="mume-header" id="21-%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E6%89%A9%E5%B1%95">
+                2.1 &#x6570;&#x636E;&#x540C;&#x6B65;&#x6269;&#x5C55;
+            </h3>
+
+            <p>
+                CV &#x5E93;&#x5185;&#x90E8;&#x5B58;&#x5728;&#x4E00;&#x4E2A; store
+                &#x72B6;&#x6001;&#x5E93;&#xFF0C;&#x8BE5;&#x5E93;&#x5185;&#x90E8;&#x5B58;&#x50A8;&#x4E86;&#x5F53;&#x524D;&#x5E27;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x56FE;&#x5F62;&#x5F15;&#x7528;&#x4EE3;&#x7406;&#xFF1A;
+            </p>
+            <pre data-role="codeBlock" data-info="ts" class="language-ts"><span class="token punctuation">{</span>
+  store<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> type<span class="token operator">:</span> <span class="token string">&apos;rectangle&apos;</span><span class="token punctuation">,</span> w<span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span> h<span class="token operator">:</span> <span class="token number">10</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> type<span class="token operator">:</span> <span class="token string">&apos;pen&apos;</span><span class="token punctuation">,</span> points<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">76</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> type<span class="token operator">:</span> <span class="token string">&apos;polygon&apos;</span><span class="token punctuation">,</span> points<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">76</span><span class="token punctuation">]</span><span class="token punctuation">,</span> lines<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">31</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">76</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</pre>
+            <p>
+                &#x6211;&#x4EEC;&#x5728;&#x5916;&#x90E8;&#x9879;&#x76EE;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; CV
+                &#x7684;&#x5B9E;&#x4F8B; &#x65B9;&#x6CD5;&#x5BF9; store
+                &#x8FDB;&#x884C;&#x5C5E;&#x6027;&#x4FEE;&#x6539;&#x4EE5;&#x5B9E;&#x73B0;&#x56FE;&#x5F62;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x91CC;&#x6709;&#x4E2A;&#x5F88;&#x590D;&#x6742;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5373;&#xFF1A;&#x8BE5;&#x5E93;&#x5C06;&#x4F1A;&#x88AB;&#x79FB;&#x690D;&#x5230;&#x5176;&#x4ED6;&#x4EFB;&#x610F;&#x6280;&#x672F;&#x6808;&#x7684;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x9879;&#x76EE;&#x662F;&#x4E0D;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x5916;&#x90E8;&#x6570;&#x636E;&#x4E0E;
+                CV
+                &#x5E93;&#x6570;&#x636E;&#x683C;&#x5F0F;&#x5B8C;&#x5168;&#x76F8;&#x540C;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x90A3;&#x4E48;&#x4F5C;&#x4E3A;&#x9879;&#x76EE;&#x4E1A;&#x52A1;&#x5F00;&#x53D1;&#x8005;&#xFF0C;&#x5728;&#x8C03;&#x7528;
+                CV
+                &#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x4FEE;&#x6539;&#x754C;&#x9762;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x4ED6;&#x6709;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x5BF9;&#x9879;&#x76EE;&#x4E2D;&#x7684;&#x72B6;&#x6001;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF0C;&#x8FD9;&#x662F;&#x6BD4;&#x8F83;&#x7E41;&#x7410;&#x4E0E;&#x591A;&#x4F59;&#x7684;&#xFF01;
+            </p>
+            <p>
+                &#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;CV
+                &#x5E93;&#x5728;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5C06;&#x5916;&#x90E8;&#x9879;&#x76EE;&#x6570;&#x636E;&#x7684;&#x53D8;&#x52A8;&#x65B9;&#x5F0F;&#x5199;&#x5728;&#x8BE5;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x64CD;&#x4F5C;
+                CV
+                &#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x65F6;&#x5019;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x5173;&#x5FC3;&#x5916;&#x90E8;&#x6570;&#x636E;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x66F4;&#x3002;
+            </p>
+            <p>
+                &#x9488;&#x5BF9;&#x672C;&#x9879;&#x76EE;&#xFF0C;&#x5176;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;
+            </p>
+            <pre
+                data-role="codeBlock"
+                data-info="ts"
+                class="language-ts"
+            ><span class="token comment">// &#x540C;&#x6B65;&#x72B6;&#x6001;&#x51FD;&#x6570;</span>
+<span class="token keyword keyword-const">const</span> <span class="token function-variable function">asyncExternal</span> <span class="token operator">=</span> <span class="token punctuation">(</span>perceptionType<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> data<span class="token operator">:</span> Annotation<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x5916;&#x90E8;data:&apos;</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+  <span class="token comment">// &#x5C06;cv&#x66B4;&#x9732;&#x51FA;&#x6765;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#x636E; &#x540C;&#x6B65;&#x7ED9;&#x9879;&#x76EE;store</span>
+  <span class="token keyword keyword-switch">switch</span> <span class="token punctuation">(</span>perceptionType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-case">case</span> <span class="token string">&apos;add&apos;</span><span class="token operator">:</span>
+      store<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+      <span class="token keyword keyword-break">break</span>
+    <span class="token keyword keyword-case">case</span> <span class="token string">&apos;change&apos;</span><span class="token operator">:</span>
+      store<span class="token punctuation">.</span><span class="token function">change</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+      <span class="token keyword keyword-break">break</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// new CV&#x5BF9;&#x8C61;&#x65F6;&#x4F20;&#x5165;&#x8BE5;&#x51FD;&#x6570;</span>
+<span class="token keyword keyword-new">new</span> <span class="token class-name">CVCanvas</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  width<span class="token operator">:</span> <span class="token number">1000</span><span class="token punctuation">,</span>
+  height<span class="token operator">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+  container<span class="token operator">:</span> <span class="token string">&apos;container&apos;</span><span class="token punctuation">,</span>
+  annotations<span class="token operator">:</span> list<span class="token punctuation">,</span>
+  asyncExternal<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre>
+            <p>
+                &#x6B64;&#x65F6;&#x5728; CV lib
+                &#x5E93;&#x4E2D;&#xFF0C;&#x5185;&#x90E8;&#x53D1;&#x751F;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x8BE5;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5373;&#x53EF;&#xFF0C;&#x6BD4;&#x5982;&#xFF1A;&#x65B0;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x56FE;&#x5F62;&#xFF1A;
+            </p>
+            <pre
+                data-role="codeBlock"
+                data-info="ts"
+                class="language-ts"
+            ><span class="token comment">// &#x821E;&#x53F0;&#x4E2D;&#x65B0;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x56FE;&#x5F62;&#xFF0C;&#x89E6;&#x53D1;&#x5185;&#x90E8;store&#x6539;&#x53D8;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x89E6;&#x53D1;&#x4E86;&#x5916;&#x90E8;&#x6570;&#x636E;&#x7684;&#x5C3E;&#x8C03;&#x7528;&#x6539;&#x53D8;</span>
+<span class="token decorator"><span class="token at operator">@</span><span class="token function">action</span></span>
+<span class="token function">add</span><span class="token punctuation">(</span>shape<span class="token operator">:</span> Konva<span class="token punctuation">.</span>Shape<span class="token punctuation">,</span> shapeData<span class="token operator">:</span> CVAnnotation<span class="token punctuation">,</span> needAsyncExternal<span class="token operator">:</span> <span class="token builtin">boolean</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// &#x4FEE;&#x6539;CV&#x5E93;&#x72B6;&#x6001;</span>
+  <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>list<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>shape<span class="token punctuation">)</span>
+
+    <span class="token comment">// &#x540C;&#x6B65;&#x5230;&#x5916;&#x90E8;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>needAsyncExternal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x53D1;&#x751F;&#x540C;&#x6B65;-add:&apos;</span><span class="token punctuation">,</span> shapeData<span class="token punctuation">)</span>
+      <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token function">asyncExternal</span><span class="token punctuation">(</span><span class="token string">&apos;add&apos;</span><span class="token punctuation">,</span> shapeData<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre>
+            <p>
+                &#x8FD9;&#x6837;&#x505A;&#xFF0C;&#x6211;&#x4EEC;&#x4F5C;&#x4E3A;&#x9879;&#x76EE;&#x5F00;&#x53D1;&#x8005;&#xFF0C;&#x5728;&#x5F00;&#x53D1;&#x65F6;&#xFF0C;&#x66F4;&#x4E3A;&#x76F4;&#x89C2;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x8981;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x529F;&#x80FD;&#xFF1A;&#x4FEE;&#x6539;&#x5C5E;&#x6027;&#x663E;&#x793A;&#x4E0E;&#x9690;&#x85CF;&#xFF0C;&#x90A3;&#x4E48;&#x5F00;&#x53D1;&#x8005;&#x53EA;&#x9700;&#x8981;&#x8C03;&#x7528;
+                <code>cv.show(shape_id)</code>
+                &#x5C31;&#x80FD;&#x540C;&#x65F6;&#x6539;&#x53D8;&#x53CC;&#x8FB9;&#x72B6;&#x6001;&#x3002;
+            </p>
+            <h3
+                class="mume-header"
+                id="22-%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E6%89%A9%E5%B1%95-%E5%9B%BE%E5%BD%A2%E5%B1%9E%E6%80%A7%E9%80%9A%E7%94%A8%E4%BF%AE%E6%94%B9"
+            >
+                2.2
+                &#x6570;&#x636E;&#x540C;&#x6B65;&#x6269;&#x5C55;--&#x56FE;&#x5F62;&#x5C5E;&#x6027;&#x901A;&#x7528;&#x4FEE;&#x6539;
+            </h3>
+
+            <p>
+                &#x6848;&#x4F8B;&#xFF1A;&#x5728;&#x9879;&#x76EE;&#x4E2D;&#xFF0C;&#x70B9;&#x51FB;&#x9501;&#x6309;&#x94AE;&#xFF0C;&#x5B9E;&#x73B0;&#x67D0;&#x4E2A;&#x56FE;&#x5F62;&#x7684;&#xFF1A;&#x53EF;&#x62D6;&#x62FD;&#x3001;&#x4E0D;&#x53EF;&#x62D6;&#x62FD;&#xFF0C;&#x4F5C;&#x4E3A;&#x5F00;&#x53D1;&#x8005;&#x53EA;&#x9700;&#x8981;&#x7B80;&#x5355;&#x7684;&#x8C03;&#x7528;&#x5982;&#x4E0B;&#x65B9;&#x6CD5;&#x5373;&#x53EF;&#xFF1A;
+            </p>
+            <pre
+                data-role="codeBlock"
+                data-info="tsx"
+                class="language-tsx"
+            ><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>
+  <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-let">let</span> draggable <span class="token operator">=</span> <span class="token operator">!</span>store<span class="token punctuation">.</span><span class="token property-access">list</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token property-access">draggable</span>
+    cv<span class="token operator">?.</span><span class="token method function property-access">changeAttrs</span><span class="token punctuation">(</span>store<span class="token punctuation">.</span><span class="token property-access">list</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token property-access">shape_id</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      draggable<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
+<span class="token punctuation">&gt;</span></span>
+  &#x70B9;&#x51FB;&#x6211;&#x5207;&#x6362;&#x62D6;&#x62FD;
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</pre>
+            <p>
+                &#x73B0;&#x5728;&#x8FDB;&#x5165; CV lib &#x5E93;&#x5185;&#x90E8;&#x89C2;&#x5BDF;
+                <code>changeAttrs</code> &#x7684;&#x5B9E;&#x73B0;&#xFF1A;
+            </p>
+            <pre
+                data-role="codeBlock"
+                data-info="ts"
+                class="language-ts"
+            ><span class="token keyword keyword-public">public</span> <span class="token function">changeAttrs</span><span class="token punctuation">(</span>shape_id<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> attrs<span class="token operator">:</span> CVAnnotation<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>ctx<span class="token punctuation">.</span>store<span class="token punctuation">.</span><span class="token function">change</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token operator">...</span>attrs<span class="token punctuation">,</span> shape_id<span class="token operator">:</span> shape_id <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>ctx<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+</pre>
+            <p>
+                &#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;
+                <code>ctx.store.change()</code
+                >&#x8FDB;&#x884C;&#x72B6;&#x6001;&#x6539;&#x53D8;&#xFF0C;&#x5176;&#x5177;&#x4F53;&#x6267;&#x884C;&#x4F53;&#x4E3A;&#xFF1A;
+            </p>
+            <pre
+                data-role="codeBlock"
+                data-info="ts"
+                class="language-ts"
+            ><span class="token decorator"><span class="token at operator">@</span><span class="token function">action</span></span>
+<span class="token function">change</span><span class="token punctuation">(</span>shapeData<span class="token operator">:</span> CVAnnotation<span class="token punctuation">,</span> ctx<span class="token operator">:</span> ICVCtx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-const">const</span> shape <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>shapeData<span class="token punctuation">.</span>shape_id<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>shape<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// &#x4FEE;&#x6539;CV&#x5E93;&#x72B6;&#x6001;</span>
+      shape<span class="token punctuation">.</span><span class="token function">setAttrs</span><span class="token punctuation">(</span>shapeData<span class="token punctuation">)</span>
+      ctx<span class="token punctuation">.</span>labelLayer<span class="token punctuation">.</span><span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+      <span class="token comment">// &#x540C;&#x6B65;&#x5230;&#x5916;&#x90E8;</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x53D1;&#x751F;&#x540C;&#x6B65;:change:&apos;</span><span class="token punctuation">,</span> shapeData<span class="token punctuation">)</span>
+      <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token function">asyncExternal</span><span class="token punctuation">(</span><span class="token string">&apos;change&apos;</span><span class="token punctuation">,</span> shapeData<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre>
+            <p>
+                &#x6211;&#x4EEC;&#x56DE;&#x5230;&#x5916;&#x90E8;&#x540C;&#x6B65;&#x51FD;&#x6570;&#x4E2D;&#x53D1;&#x73B0;&#xFF0C;&#x6267;&#x884C;&#x7684;&#x662F;
+                <code>change</code> &#x4E8B;&#x4EF6;&#xFF0C;&#x5BF9;&#x5E94;&#x5916;&#x90E8; store &#x7684; change
+                &#x65B9;&#x6CD5;&#xFF1A;
+            </p>
+            <pre
+                data-role="codeBlock"
+                data-info="ts"
+                class="language-ts"
+            ><span class="token decorator"><span class="token at operator">@</span><span class="token function">action</span></span>
+<span class="token function">change</span><span class="token punctuation">(</span>attr<span class="token operator">:</span> Annotation<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-let">let</span> shape <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>attr<span class="token punctuation">.</span>shape_id<span class="token punctuation">)</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>shape<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">set</span><span class="token punctuation">(</span>shape<span class="token punctuation">,</span> attr<span class="token punctuation">)</span>  <span class="token comment">// mobx&#x63D0;&#x4F9B;&#x7684; &#x4EE3;&#x7406;set</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre>
+        </div>
+    </body>
+</html>

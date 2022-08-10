@@ -1,0 +1,117 @@
+{
+    "message": "OK",
+    "data": [
+        {
+            "id": 19,
+            "source": "auto",
+            "tagId": 1,
+            "tagName": "车",
+            "createTime": 175723842734,
+            "type": "rectangle",
+            "points": [0, 0, 1422, 100],
+            "attribute": [
+                {
+                    "id": 20,
+                    "value": "选项三",
+                    "specId": 1,
+                    "specName": "选择"
+                },
+                {
+                    "id": 20,
+                    "value": "男",
+                    "specId": 2,
+                    "specName": "性别"
+                },
+                {
+                    "id": 20,
+                    "value": "true",
+                    "specId": 3,
+                    "specName": "多选"
+                },
+                {
+                    "id": 20,
+                    "value": "false",
+                    "specId": 4,
+                    "specName": "多选"
+                },
+                {
+                    "id": 20,
+                    "value": "1",
+                    "specId": 5,
+                    "specName": "数值"
+                },
+                {
+                    "id": 20,
+                    "value": "文本文本文本文本文本文本",
+                    "specId": 6,
+                    "specName": "文本"
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "source": "auto",
+            "tagId": 1,
+            "tagName": "车",
+            "createTime": 175723842734,
+            "type": "rectangle",
+            "points": [200, 200, 500, 400],
+            "attribute": [
+                {
+                    "id": 20,
+                    "value": "选项三",
+                    "specId": 1,
+                    "specName": "选择"
+                },
+                {
+                    "id": 20,
+                    "value": "男",
+                    "specId": 2,
+                    "specName": "性别"
+                },
+                {
+                    "id": 20,
+                    "value": "true",
+                    "specId": 3,
+                    "specName": "多选"
+                },
+                {
+                    "id": 20,
+                    "value": "false",
+                    "specId": 4,
+                    "specName": "多选"
+                },
+                {
+                    "id": 20,
+                    "value": "1",
+                    "specId": 5,
+                    "specName": "数值"
+                },
+                {
+                    "id": 20,
+                    "value": "文本文本文本文本文本文本",
+                    "specId": 6,
+                    "specName": "文本"
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "source": "auto",
+            "tagId": 2,
+            "tagName": "马",
+            "createTime": 175723842734,
+            "type": "rectangle",
+            "points": [550, 450, 800, 700],
+            "attribute": [
+                {
+                    "id": 21,
+                    "value": "女",
+                    "specId": 7,
+                    "specName": "性别 2"
+                }
+            ]
+        }
+    ],
+    "status": 200
+}

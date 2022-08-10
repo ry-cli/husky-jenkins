@@ -1,0 +1,27 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "markdownlint.config": {
+        "default": true,
+        "MD010": {
+            "code_blocks": false
+        },
+        "MD030": false
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        },
+        "editor.tabSize": 2,
+        "editor.useTabStops": true
+    },
+    "workbench.editor.enablePreview": false,
+    "compile-hero.disable-compile-files-on-did-save-code": false
+}
