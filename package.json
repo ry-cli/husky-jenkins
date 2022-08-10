@@ -12,7 +12,7 @@
         "lint:fix": "eslint  --fix",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "prepare": "node ./prepare.js"
+        "prepare": "husky install"
     },
     "eslintConfig": {
         "extends": [
