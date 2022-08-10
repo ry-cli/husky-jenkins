@@ -1,5 +1,5 @@
 {
-    "name": "ccb-web-cv-tool",
+    "name": "111",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -12,7 +12,7 @@
         "lint:fix": "eslint  --fix",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "prepare": "husky install"
+        "prepare": "node ./prepare.js"
     },
     "eslintConfig": {
         "extends": [
