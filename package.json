@@ -12,7 +12,7 @@
         "lint:fix": "eslint  --fix",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "prepare": "node ./prepare.js"
+        "prepare": "node .husky/install.js"
     },
     "eslintConfig": {
         "extends": [
@@ -67,6 +67,7 @@
         "express": "^4.18.1",
         "http-proxy-middleware": "^2.0.1",
         "husky": "^7.0.0",
+        "is-ci": "^3.0.1",
         "prettier": "^2.4.1"
     },
     "config": {
